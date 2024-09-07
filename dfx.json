@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "ChainGuard_backend": {
+      "declarations": {
+        "node_compatibility": true
+      },
+      "main": "src/ChainGuard_backend/main.mo",
+      "type": "motoko"
+    },
+    "ChainGuard_frontend": {
+      "dependencies": [
+        "ChainGuard_backend"
+      ],
+      "source": [
+        "src/ChainGuard_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "ChainGuard_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
