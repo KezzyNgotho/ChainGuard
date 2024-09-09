@@ -1,0 +1,63 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --primary-bg: #F4F7FA; /* Light grey background */
+  --card-bg: #ffffff; /* Card background */
+  --button-bg: #FF5733; /* Primary button background */
+  --button-bg-hover: #000000; /* Primary button hover background */
+  --text-color: #333333; /* Primary text color */
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: var(--primary-bg);
+}
+
+.background {
+  @apply flex items-center justify-center h-screen bg-gray-50;
+}
+
+.container {
+  @apply bg-white rounded-lg shadow-lg p-12 max-w-4xl w-full;
+}
+
+.logo {
+  @apply w-32 h-auto mb-6;
+}
+
+.card {
+  @apply bg-white p-8 rounded-lg shadow-lg;
+}
+
+.form-button {
+  @apply bg-[#FF5733] text-white font-semibold rounded-lg shadow-lg py-3 px-6 border-none cursor-pointer transition-transform transform hover:bg-[#000] hover:scale-105;
+}
+
+.form-input {
+  @apply border rounded-lg p-4 w-full mb-4 border-gray-300 focus:border-[#FF5733] focus:outline-none;
+}
+
+textarea.form-input {
+  @apply resize-none h-24;
+}
+
+select.form-input {
+  @apply border rounded-lg p-4 w-full mb-4 border-gray-300 focus:border-[#FF5733] focus:outline-none;
+}
+
+.progress-bar-container {
+  @apply relative h-2 bg-gray-200 rounded-full mt-6;
+}
+
+.progress-bar {
+  @apply absolute top-0 left-0 h-full bg-[#FF5733] rounded-full;
+}
+
+.avatar-preview {
+  @apply w-32 h-32 object-cover rounded-full border border-gray-300;
+}

@@ -1,101 +1,179 @@
 <script>
-  import "../index.scss";
-  import { backend } from "$lib/canisters";
-  import x from '../routes/assets/download.jpeg'
- 
- 
- 
-    // Define any local state or methods here if necessary
+  import logo from '../routes/assets/download2.png';
+  import hero from '../routes/assets/download2.png';
+  import '../index.scss';
+  import { authenticateWithInternetIdentity } from '../routes/services/auth';
+
+  let isMenuOpen = false;
+
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+  }
+
+  function handleSignUpClick() {
+    goto('/signup'); // Navigate to the signup page
+  }
+
+  function handleLoginClick() {
+    authenticateWithInternetIdentity().catch((error) => {
+      console.error("Authentication failed:", error);
+    });
+  }
+
+  const items = [
+    {
+      id: 'item1',
+      title: 'Exclusive Artwork',
+      description: "An exclusive piece of digital artwork, available for licensing and purchase. Perfect for enhancing your brand's visual identity.",
+      imgSrc: logo
+    },
+    {
+      id: 'item2',
+      title: 'Premium Software',
+      description: "Cutting-edge software solution designed for creative professionals. Explore licensing options and get started with a demo.",
+      imgSrc: logo
+    },
+    {
+      id: 'item3',
+      title: 'Innovative Patents',
+      description: "Explore groundbreaking patents and technologies. Perfect for licensing and collaboration opportunities.",
+      imgSrc: logo
+    }
+  ];
 </script>
 
-<section class="bg-gray-50 min-h-screen">
-  <!-- Navbar -->
-  <nav class="flex items-center justify-between p-6 bg-white shadow-md">
-    <div class="text-xl font-bold text-gray-800">AuthentiChain</div>
-    <div class="space-x-4">
-      <a href="#features" class="text-gray-600 hover:text-gray-800">Features</a>
-      <a href="#how-it-works" class="text-gray-600 hover:text-gray-800">How It Works</a>
-      <a href="#contact" class="text-gray-600 hover:text-gray-800">Contact</a>
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md">Get Started</button>
-    </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Navbar -->
+<header class="bg-[#0f535c] text-white py-4 px-6 flex flex-col md:flex-row items-center justify-between shadow-lg fixed top-0 w-full z-50">
+  <!-- Logo and Title -->
+  <div class="flex items-center space-x-4 w-full md:w-auto">
+    <a href="/" class="flex items-center space-x-2">
+      <img src={logo} alt="Icon" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border-4 border-blue-200 transition-transform transform hover:scale-110 duration-300" />
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-bold">ChainGuard</h1>
+    </a>
+  </div>
+
+  <!-- Center Links (Desktop) -->
+  <nav class="hidden md:flex flex-grow justify-center space-x-6 mt-4 md:mt-0">
+    {#each ['Features', 'Marketplace', 'Licensing', 'Protection'] as link}
+      <a href="#{link.toLowerCase()}" class="text-white hover:text-blue-300 border-b-2 border-transparent hover:border-white px-4 py-2 transition-all duration-300">{link}</a>
+    {/each}
   </nav>
 
-  <!-- Hero Section -->
-  <section class="text-center py-20 bg-blue-50">
-    <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Secure Your Intellectual Property with AuthentiChain</h1>
-    <p class="text-lg text-gray-600 mb-8">
-      Protect, manage, and monetize your creative works in a decentralized way, powered by blockchain.
-    </p>
-    <button class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700">
-      Register Now
-    </button>
-  </section>
+  <!-- Right Section Buttons -->
+  <div class="flex space-x-4 mt-4 md:mt-0">
+    <button class="bg-gray-800 text-white px-4 py-2 rounded-full shadow-md hover:bg-gray-700 transition-all duration-300 transform hover:scale-105">Get Started 🚀</button>
+    <button class="bg-transparent border border-blue-200 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-300 hover:text-[#0f535c] transition-all duration-300 transform hover:scale-105">Partner with Us 🤝</button>
+  </div>
+</header>
 
-  <!-- Features Section -->
-  <section id="features" class="py-16 bg-white">
-    <div class="container mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Key Features</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">Decentralized IP Registration</h3>
-          <p class="text-gray-600">Your IP rights secured on the blockchain with transparent proof of ownership.</p>
-        </div>
-        <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">Licensing & Marketplace</h3>
-          <p class="text-gray-600">Monetize your IP with custom licenses and discover potential buyers.</p>
-        </div>
-        <div class="bg-blue-50 p-6 rounded-lg shadow-lg text-center">
-          <h3 class="text-xl font-semibold text-gray-800 mb-4">AI-Powered Plagiarism Detection</h3>
-          <p class="text-gray-600">Receive real-time alerts for unauthorized usage of your IP.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works Section -->
-  <section id="how-it-works" class="py-16 bg-gray-50">
-    <div class="container mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">How It Works</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <img src={x} alt="How It Works" class="rounded-lg shadow-lg">
-        </div>
-        <div class="flex flex-col justify-center">
-          <div class="mb-6">
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">1. Register Your IP</h3>
-            <p class="text-gray-600">Easily submit your work and register your IP rights on the blockchain.</p>
-          </div>
-          <div class="mb-6">
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">2. Create Licenses</h3>
-            <p class="text-gray-600">Set custom licensing terms and make your IP available for monetization.</p>
-          </div>
-          <div>
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">3. Protect and Earn</h3>
-            <p class="text-gray-600">Monitor for infringements and automatically receive payments for your licensed works.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-16 bg-white">
-    <div class="container mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold text-gray-800 mb-12">Get in Touch</h2>
-      <p class="text-gray-600 mb-6">Have questions or want to learn more? Drop us a message, and we’ll get back to you as soon as possible.</p>
-      <form class="max-w-lg mx-auto">
-        <input type="email" placeholder="Your Email" class="w-full px-4 py-3 mb-4 border rounded-lg">
-        <textarea placeholder="Your Message" class="w-full px-4 py-3 mb-4 border rounded-lg"></textarea>
-        <button class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700">
-          Send Message
+<!-- Hero Section -->
+<section class="hero min-h-screen flex items-center justify-center bg-[#0f535c] text-white">
+  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-8">
+    <!-- Left Side: Text Content -->
+    <div class="text-content md:w-1/2 text-center md:text-left">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+        Protect Your Creations with <span class="text-[#00C4CC]">ChainGuard</span>
+      </h1>
+      <p class="text-lg md:text-xl mb-6">
+        Secure your intellectual property with blockchain. Ensure your creative work is safe and monetized effectively.
+      </p>
+      <!-- Styled Buttons -->
+      <div class="flex justify-center md:justify-start space-x-4">
+        <button 
+          on:click={handleSignUpClick}
+          class="bg-[#00C4CC] text-white px-11 py-2 text-lg font-semibold shadow-lg hover:bg-white hover:text-[#0f535c] transition-all duration-300 ease-in-out transform hover:scale-105">
+          Sign Up
         </button>
-      </form>
+      
+        <button 
+          on:click={handleLoginClick}
+          class="bg-transparent border-2 border-white text-white px-11 py-2 text-lg font-semibold shadow-lg hover:bg-white hover:text-[#0f535c] transition-all duration-300 ease-in-out transform hover:scale-105">
+          Login
+        </button>
+      </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="py-6 bg-gray-800 text-white text-center">
-    <p>&copy; 2024 AuthentiChain. All rights reserved.</p>
-  </footer>
+    <!-- Right Side: Image or Graphic -->
+    <div class="image-content md:w-1/2 mt-8 md:mt-0">
+      <img src={hero} alt="Blockchain Security Graphic" class="w-full h-auto rounded-lg " />
+    </div>
+  </div>
 </section>
 
+
+<!-- Features Section -->
+<section id="features" class="section-padding bg-gradient-to-r from-[#f0f4f8] to-white py-16">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold text-[#0f535c] mb-8">Platform Features</h2>
+    <p class="text-gray-600 mb-12 max-w-3xl mx-auto">Discover how ChainGuard protects and empowers creators through blockchain-powered digital rights management and licensing.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {#each items as {title, description}}
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+          <h3 class="text-xl font-semibold text-[#0f535c] mb-4">{title}</h3>
+          <p class="text-gray-600">{description}</p>
+        </div>
+      {/each}
+    </div>
+  </div>
+</section>
+
+<!-- Marketplace Section -->
+<section id="marketplace" class="section-padding bg-gradient-to-r from-blue-50 to-white py-16">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold text-[#0f535c] mb-8">Marketplace</h2>
+    <p class="text-gray-600 mb-12 max-w-2xl mx-auto">
+      Explore our dynamic marketplace where you can showcase your intellectual property, find licensing opportunities, and connect with potential partners and buyers.
+    </p>
+
+    <!-- Marketplace Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {#each items as {imgSrc, title, description}}
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+          <img src={imgSrc} alt="Marketplace Item" class="w-full h-48 object-cover rounded-md mb-4" />
+          <h3 class="text-xl font-semibold text-[#0f535c] mb-2">{title}</h3>
+          <p class="text-gray-600 mb-4">{description}</p>
+        </div>
+      {/each}
+    </div>
+  </div>
+</section>
+
+<!-- Licensing Section -->
+<section id="licensing" class="section-padding bg-gradient-to-r from-[#f9f9f9] to-white py-16">
+  <div class="container mx-auto text-center">
+    <h2 class="text-4xl font-bold text-[#0f535c] mb-8">Licensing Opportunities</h2>
+    <p class="text-gray-600 mb-12 max-w-3xl mx-auto">
+      Discover various licensing models and opportunities to monetize your intellectual property. Tailored solutions for every creative professional.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Licensing cards will go here -->
+    </div>
+  </div>
+</section>
+<footer class="bg-[#0f535c] text-white py-6 text-center">
+  <div class="container mx-auto">
+    <p class="mb-4">&copy; 2024 ChainGuard. All rights reserved.</p>
+    <div class="space-x-4 mb-4">
+      <a href="/privacy" class="hover:text-blue-300">Privacy Policy</a>
+      <a href="/terms" class="hover:text-blue-300">Terms of Service</a>
+      <a href="#contact" class="hover:text-blue-300">Contact</a>
+    </div>
+    <div class="space-x-6">
+      <a href="https://facebook.com" target="_blank" class="hover:text-blue-300">
+        <i class="fab fa-facebook fa-lg"></i>
+      </a>
+      <a href="https://twitter.com" target="_blank" class="hover:text-blue-300">
+        <i class="fab fa-twitter fa-lg"></i>
+      </a>
+      <a href="https://instagram.com" target="_blank" class="hover:text-blue-300">
+        <i class="fab fa-instagram fa-lg"></i>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="hover:text-blue-300">
+        <i class="fab fa-linkedin fa-lg"></i>
+      </a>
+    </div>
+  </div>
+</footer>
